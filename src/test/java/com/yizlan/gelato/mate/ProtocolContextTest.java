@@ -31,7 +31,7 @@ public class ProtocolContextTest {
     void init() {
         Gender gender = new Gender();
         gender.setCode(1);
-        gender.setText("男");
+        gender.setName("男");
 
         API_RESULT.setCode(200);
         API_RESULT.setMessage("success");
@@ -63,7 +63,7 @@ public class ProtocolContextTest {
         // data
         protocolContext.getData().ifPresent(System.out::println);
         protocolContext.getData(m -> {
-                    System.out.printf("The current code is %s. When code is 200, print data => ", m.getCode());
+                    System.out.printf("The current code is %s. When code is 200, printing data => ", m.getCode());
                     return m.getCode() == 200;
                 })
                 .ifPresent(System.out::println);
@@ -79,7 +79,7 @@ public class ProtocolContextTest {
                     ApiResult<String> targetApiResult = ApiResult.of();
                     targetApiResult.setCode(m.getCode());
                     targetApiResult.setMessage(m.getMessage());
-                    targetApiResult.setData(gender.getText());
+                    targetApiResult.setData(gender.getName());
                     return targetApiResult;
                 });
         ApiResult<String> peekTarget = map.peek();
@@ -90,7 +90,7 @@ public class ProtocolContextTest {
                 .accept(m -> System.out.printf("RESULT：%s%n", m));
         ProtocolContext.of(RESULT)
                 .accept(m -> {
-                    String info = String.format("The current code is %s. When code is 500, print data.%n", m.getCode());
+                    String info = String.format("The current code is %s. When code is 500, printing data.%n", m.getCode());
                     if (m.getCode() == 500) {
                         info += "Result data is：";
                     }
