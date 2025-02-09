@@ -52,7 +52,6 @@
             <groupId>com.yizlan</groupId>
             <artifactId>gelato-core</artifactId>
             <version>${gelato.version}</version>
-            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
