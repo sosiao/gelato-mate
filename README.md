@@ -10,6 +10,14 @@
   <a href="https://www.apache.org/licenses/LICENSE-2.0">
     <img alt="License" src="https://img.shields.io/badge/license-Apache%202-4EB1BA.svg">
   </a>
+
+  <a href="https://gitee.com/sosiao/gelato-mate">
+    <img alt="Gitee stars" src="https://gitee.com/sosiao/gelato-mate/badge/star.svg?theme=white">
+  </a>
+
+  <a href="https://github.com/sosiao/gelato-mate">
+    <img alt="GitHub stars" src="https://img.shields.io/github/stars/sosiao/gelato-mate?style=flat&logo=github">
+  </a>
 </p>
 
 # 简介 | Intro
