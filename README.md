@@ -8,7 +8,7 @@
   </a>
 
   <a href="https://www.apache.org/licenses/LICENSE-2.0">
-    <img alt="License" src="https://img.shields.io/badge/license-Apache%202-4EB1BA.svg">
+    <img alt="License" src="https://img.shields.io/github/license/sosiao/gelato-mate.svg">
   </a>
 
   <a href="https://gitee.com/sosiao/gelato-mate">
