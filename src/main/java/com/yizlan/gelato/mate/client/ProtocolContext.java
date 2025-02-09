@@ -73,6 +73,7 @@ public class ProtocolContext<P extends TerResult<T, U, S>, T extends Comparable<
     }
 
     public Optional<S> getData(Predicate<? super P> predicate) {
+        assertNonNull(predicate);
         return predicate.test(original) ? getData() : Optional.empty();
     }
 

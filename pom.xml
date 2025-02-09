@@ -6,12 +6,12 @@
 
     <groupId>com.yizlan</groupId>
     <artifactId>gelato-mate</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
     <description>Flavoring for Gelato Canonical.</description>
-    <url>https://atomgit.com/sosiao/gelato-mate</url>
+    <url>https://gitee.com/sosiao/gelato-mate</url>
 
     <licenses>
         <license>
@@ -28,9 +28,9 @@
     </developers>
 
     <scm>
-        <connection>scm:git:git@atomgit.com:sosiao/gelato-mate.git</connection>
-        <developerConnection>scm:git:git@atomgit.com:sosiao/gelato-mate.git</developerConnection>
-        <url>https://atomgit.com/sosiao/gelato-mate.git</url>
+        <connection>scm:git:git@gitee.com:sosiao/gelato-mate.git</connection>
+        <developerConnection>scm:git:git@gitee.com:sosiao/gelato-mate.git</developerConnection>
+        <url>https://gitee.com/sosiao/gelato-mate.git</url>
     </scm>
 
     <properties>
