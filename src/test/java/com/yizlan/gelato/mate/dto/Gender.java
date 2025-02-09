@@ -22,7 +22,7 @@ public class Gender implements BiDictionary<Integer, String> {
 
     private Integer code;
 
-    private String text;
+    private String name;
 
     @Override
     public Integer getCode() {
@@ -35,20 +35,20 @@ public class Gender implements BiDictionary<Integer, String> {
     }
 
     @Override
-    public String getText() {
-        return text;
+    public String getName() {
+        return name;
     }
 
     @Override
-    public void setText(String text) {
-        this.text = text;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
     public String toString() {
         return "Gender{" +
                 "code=" + code +
-                ", text='" + text + '\'' +
+                ", name='" + name + '\'' +
                 '}';
     }
 }
