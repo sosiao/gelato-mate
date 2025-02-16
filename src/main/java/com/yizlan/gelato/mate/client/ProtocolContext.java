@@ -16,7 +16,7 @@
 
 package com.yizlan.gelato.mate.client;
 
-import com.yizlan.gelato.core.protocol.TerResult;
+import com.yizlan.gelato.canonical.protocol.TerResult;
 
 import java.io.Serializable;
 import java.util.Objects;
