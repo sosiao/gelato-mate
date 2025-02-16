@@ -16,6 +16,7 @@
 
 package com.yizlan.gelato.mate.client;
 
+import com.yizlan.gelato.canonical.panic.MetaException;
 import com.yizlan.gelato.canonical.protocol.TerResult;
 
 import java.io.Serializable;
@@ -115,6 +116,63 @@ public class ProtocolContext<P extends TerResult<T, U, S>, T extends Comparable<
         for (Object arg : args) {
             Objects.requireNonNull(arg);
         }
+    }
+
+    /**
+     * Asserts that the business code meets the expected value.
+     * If the assertion fails, a custom exception is thrown through the provided mapping function.
+     *
+     * @param expectCode business code
+     * @param mapper     a non-interfering, stateless function to apply to result
+     * @param <E>        the type of the exception which must be a subclass of {@link MetaException}
+     * @return the current protocol context object if the assertion is successful
+     * @throws E throws an exception of type E if the assertion fails
+     */
+    public <E extends MetaException> ProtocolContext<P, T, U, S> assertCode(T expectCode,
+                                                                            Function<? super TerResult<T, U, S>, ? extends E> mapper) throws E {
+        assertNonNull(expectCode, mapper);
+        if (codeNotEquals(expectCode)) {
+            throw mapper.apply(original);
+        }
+        return this;
+    }
+
+    /**
+     * Provides a way to verify the usability of the result and handle exceptions in a functional manner.
+     * If the assertion fails, a custom exception is thrown through the provided mapping function.
+     *
+     * @param predicate a non-interfering, stateless predicate that asserts whether the result is usable through code
+     * @param mapper    a non-interfering, stateless function to apply to result
+     * @param <E>       the type of the exception which must be a subclass of {@link MetaException}
+     * @return the current protocol context object if the assertion is successful
+     * @throws E throws an exception of type E if the assertion fails
+     */
+    public <E extends MetaException> ProtocolContext<P, T, U, S> assertCode(Predicate<? super T> predicate,
+                                                                            Function<? super TerResult<T, U, S>, ? extends E> mapper) throws E {
+        assertNonNull(predicate, mapper);
+        if (!predicate.test(original.getCode())) {
+            throw mapper.apply(original);
+        }
+        return this;
+    }
+
+    /**
+     * Asserts whether the result data is usable and returns the current protocol context object if the assertion is
+     * successful.
+     *
+     * @param predicate predicate a non-interfering, stateless predicate that asserts whether the result is usable
+     * @param mapper    a non-interfering, stateless function to apply to result
+     * @param <E>       the type of the exception which must be a subclass of {@link MetaException}
+     * @return the current protocol context object if the assertion is successful
+     * @throws E throws an exception of type E if the assertion fails
+     */
+    public <E extends MetaException> ProtocolContext<P, T, U, S> assertData(Predicate<? super S> predicate,
+                                                                            Function<? super TerResult<T, U, S>, ? extends E> mapper) throws E {
+        assertNonNull(predicate, mapper);
+        if (!predicate.test(original.getData())) {
+            throw mapper.apply(original);
+        }
+        return this;
     }
 
     public <Q extends TerResult<T, U, R>, R> ProtocolContext<Q, T, U, R> map(Function<? super P, ? extends Q> mapper) {
