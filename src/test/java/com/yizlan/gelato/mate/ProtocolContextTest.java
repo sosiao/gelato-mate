@@ -18,9 +18,12 @@ package com.yizlan.gelato.mate;
 
 import com.yizlan.gelato.mate.client.ProtocolContext;
 import com.yizlan.gelato.mate.dto.Gender;
+import com.yizlan.gelato.mate.exception.I18nException;
 import com.yizlan.gelato.mate.protocol.ApiResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.Objects;
 
 public class ProtocolContextTest {
 
@@ -61,7 +64,10 @@ public class ProtocolContextTest {
         protocolContext.getMessage().ifPresent(m -> System.out.printf("message: %s.%n", m));
 
         // data
-        protocolContext.getData().ifPresent(System.out::println);
+        protocolContext
+                .assertData(Objects::nonNull, r -> new I18nException("error：" + r.getCode()))
+                .getData()
+                .ifPresent(System.out::println);
         protocolContext.getData(m -> {
                     System.out.printf("The current code is %s. When code is 200, printing data => ", m.getCode());
                     return m.getCode() == 200;
@@ -69,7 +75,9 @@ public class ProtocolContextTest {
                 .ifPresent(System.out::println);
 
         // protocol data
-        ApiResult<Gender> peek = protocolContext.peek();
+        ApiResult<Gender> peek = protocolContext
+                .assertCode(m -> m == 200, r -> new I18nException("error：" + r.getCode()))
+                .peek();
         System.out.println(peek);
 
         // convert protocol data
