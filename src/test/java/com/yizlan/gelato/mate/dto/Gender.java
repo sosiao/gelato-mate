@@ -16,7 +16,7 @@
 
 package com.yizlan.gelato.mate.dto;
 
-import com.yizlan.gelato.core.dictionary.BiDictionary;
+import com.yizlan.gelato.canonical.dictionary.BiDictionary;
 
 public class Gender implements BiDictionary<Integer, String> {
 
