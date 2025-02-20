@@ -46,42 +46,42 @@ public class ProtocolContextTest {
 
     @Test
     public void test() {
-        ProtocolContext<ApiResult<Gender>, Integer, String, Gender> protocolContext = ProtocolContext.of(API_RESULT);
+        ProtocolContext<ApiResult<Gender>, Integer, String, Gender> ctx = ProtocolContext.of(API_RESULT);
 
         // 200
-        Integer code = protocolContext.getCode();
+        Integer code = ctx.getCode();
         assert code.equals(200);
 
         // true
-        boolean codeEquals = protocolContext.codeEquals(200);
+        boolean codeEquals = ctx.codeEquals(200);
         assert codeEquals;
 
         // false
-        boolean codeNotEquals = protocolContext.codeNotEquals(200);
+        boolean codeNotEquals = ctx.codeNotEquals(200);
         assert !codeNotEquals;
 
         // message
-        protocolContext.getMessage().ifPresent(m -> System.out.printf("message: %s.%n", m));
+        ctx.getMessage().ifPresent(m -> System.out.printf("message: %s.%n", m));
 
         // data
-        protocolContext
-                .assertData(Objects::nonNull, r -> new I18nException("error：" + r.getCode()))
+        ctx.assertData(Objects::nonNull, r -> new I18nException("error：" + r.getCode()))
                 .getData()
                 .ifPresent(System.out::println);
-        protocolContext.getData(m -> {
+        ctx.getData(m -> {
                     System.out.printf("The current code is %s. When code is 200, printing data => ", m.getCode());
                     return m.getCode() == 200;
                 })
                 .ifPresent(System.out::println);
 
         // protocol data
-        ApiResult<Gender> peek = protocolContext
+        ApiResult<Gender> peek = ctx
                 .assertCode(m -> m == 200, r -> new I18nException("error：" + r.getCode()))
                 .peek();
         System.out.println(peek);
 
         // convert protocol data
-        ProtocolContext<ApiResult<String>, Integer, String, String> map = protocolContext
+        ApiResult<String> convertResult = ctx
+                .assertCode(m -> m == 200, r -> new I18nException("error：" + r.getCode()))
                 .map(m -> {
                     Gender gender = m.getData();
                     ApiResult<String> targetApiResult = ApiResult.of();
@@ -89,16 +89,17 @@ public class ProtocolContextTest {
                     targetApiResult.setMessage(m.getMessage());
                     targetApiResult.setData(gender.getName());
                     return targetApiResult;
-                });
-        ApiResult<String> peekTarget = map.peek();
-        System.out.println(peekTarget);
+                })
+                .peek();
+        System.out.println(convertResult);
 
         // consumer
         ProtocolContext.of(RESULT)
                 .accept(m -> System.out.printf("RESULT：%s%n", m));
         ProtocolContext.of(RESULT)
                 .accept(m -> {
-                    String info = String.format("The current code is %s. When code is 500, printing data.%n", m.getCode());
+                    String info = String.format("The current code is %s. When code is 500, printing data.%n",
+                            m.getCode());
                     if (m.getCode() == 500) {
                         info += "Result data is：";
                     }
