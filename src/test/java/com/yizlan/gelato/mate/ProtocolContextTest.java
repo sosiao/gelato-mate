@@ -36,12 +36,9 @@ public class ProtocolContextTest {
         gender.setCode(1);
         gender.setName("男");
 
-        API_RESULT.setCode(200);
-        API_RESULT.setMessage("success");
-        API_RESULT.setData(gender);
+        API_RESULT.data(gender).code(200).message("success");
 
-        RESULT.setCode(200);
-        RESULT.setData(gender);
+        RESULT.data(gender).code(200);
     }
 
     @Test
