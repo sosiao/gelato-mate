@@ -51,11 +51,6 @@ public class ApiResult<T> implements TerResult<ApiResult<T>, Integer, String, T>
     }
 
     @Override
-    public ApiResult<T> self() {
-        return this;
-    }
-
-    @Override
     public T getData() {
         return data;
     }
@@ -63,6 +58,11 @@ public class ApiResult<T> implements TerResult<ApiResult<T>, Integer, String, T>
     @Override
     public void setData(T data) {
         this.data = data;
+    }
+
+    @Override
+    public ApiResult<T> self() {
+        return this;
     }
 
     public ApiResult() {
