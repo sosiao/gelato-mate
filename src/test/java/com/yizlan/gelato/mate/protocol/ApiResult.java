@@ -79,6 +79,7 @@ public class ApiResult<T> implements TerResult<Integer, String, T>, Serializable
         return build(code, message, null);
     }
 
+    @Override
     public ApiResult<T> failure() {
         return build(500, "failure", null);
     }
