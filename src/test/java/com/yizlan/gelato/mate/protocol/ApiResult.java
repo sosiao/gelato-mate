@@ -35,6 +35,7 @@ public class ApiResult<T> implements TerResult<Integer, String, T>, Serializable
         return code;
     }
 
+    @Override
     public void setCode(Integer code) {
         this.code = code;
     }
@@ -44,6 +45,7 @@ public class ApiResult<T> implements TerResult<Integer, String, T>, Serializable
         return message;
     }
 
+    @Override
     public void setMessage(String message) {
         this.message = message;
     }
@@ -53,6 +55,7 @@ public class ApiResult<T> implements TerResult<Integer, String, T>, Serializable
         return data;
     }
 
+    @Override
     public void setData(T data) {
         this.data = data;
     }
