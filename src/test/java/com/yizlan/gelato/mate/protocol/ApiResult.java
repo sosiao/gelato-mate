@@ -21,7 +21,7 @@ import com.yizlan.gelato.canonical.protocol.TerResult;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class ApiResult<T> implements TerResult<Integer, String, T>, Serializable {
+public class ApiResult<T> implements TerResult<ApiResult<T>, Integer, String, T>, Serializable {
     private static final long serialVersionUID = 1L;
 
     private Integer code;
@@ -48,6 +48,11 @@ public class ApiResult<T> implements TerResult<Integer, String, T>, Serializable
     @Override
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    @Override
+    public ApiResult<T> self() {
+        return this;
     }
 
     @Override
