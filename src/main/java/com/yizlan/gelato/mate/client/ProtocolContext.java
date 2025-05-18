@@ -37,7 +37,7 @@ import java.util.function.Predicate;
  * @author Zen Gershon
  * @since 1.0
  */
-public class ProtocolContext<P extends TerResult<T, U, S>, T extends Comparable<T> & Serializable,
+public class ProtocolContext<P extends TerResult<P, T, U, S>, T extends Comparable<T> & Serializable,
         U extends Comparable<U> & Serializable, S> {
 
     protected final P original;
@@ -56,7 +56,7 @@ public class ProtocolContext<P extends TerResult<T, U, S>, T extends Comparable<
      * @param <S>      the type of the data field
      * @return a new instance of ProtocolContext
      */
-    public static <P extends TerResult<T, U, S>, T extends Comparable<T> & Serializable,
+    public static <P extends TerResult<P, T, U, S>, T extends Comparable<T> & Serializable,
             U extends Comparable<U> & Serializable, S> ProtocolContext<P, T, U, S> of(P original) {
         return new ProtocolContext<>(Objects.requireNonNull(original));
     }
@@ -129,7 +129,7 @@ public class ProtocolContext<P extends TerResult<T, U, S>, T extends Comparable<
      * @throws E throws an exception of type E if the assertion fails
      */
     public <E extends MetaException> ProtocolContext<P, T, U, S> assertCode(T expectCode,
-                                                                            Function<? super TerResult<T, U, S>, ? extends E> mapper) throws E {
+                                                                            Function<? super TerResult<P, T, U, S>, ? extends E> mapper) throws E {
         assertNonNull(expectCode, mapper);
         if (codeNotEquals(expectCode)) {
             throw mapper.apply(original);
@@ -148,7 +148,7 @@ public class ProtocolContext<P extends TerResult<T, U, S>, T extends Comparable<
      * @throws E throws an exception of type E if the assertion fails
      */
     public <E extends MetaException> ProtocolContext<P, T, U, S> assertCode(Predicate<? super T> predicate,
-                                                                            Function<? super TerResult<T, U, S>, ? extends E> mapper) throws E {
+                                                                            Function<? super TerResult<P, T, U, S>, ? extends E> mapper) throws E {
         assertNonNull(predicate, mapper);
         if (!predicate.test(original.getCode())) {
             throw mapper.apply(original);
@@ -167,7 +167,7 @@ public class ProtocolContext<P extends TerResult<T, U, S>, T extends Comparable<
      * @throws E throws an exception of type E if the assertion fails
      */
     public <E extends MetaException> ProtocolContext<P, T, U, S> assertData(Predicate<? super S> predicate,
-                                                                            Function<? super TerResult<T, U, S>, ? extends E> mapper) throws E {
+                                                                            Function<? super TerResult<P, T, U, S>, ? extends E> mapper) throws E {
         assertNonNull(predicate, mapper);
         if (!predicate.test(original.getData())) {
             throw mapper.apply(original);
@@ -175,7 +175,7 @@ public class ProtocolContext<P extends TerResult<T, U, S>, T extends Comparable<
         return this;
     }
 
-    public <Q extends TerResult<T, U, R>, R> ProtocolContext<Q, T, U, R> map(Function<? super P, ? extends Q> mapper) {
+    public <Q extends TerResult<Q, T, U, R>, R> ProtocolContext<Q, T, U, R> map(Function<? super P, ? extends Q> mapper) {
         assertNonNull(mapper);
         Q protocol = mapper.apply(original);
         return of(protocol);
