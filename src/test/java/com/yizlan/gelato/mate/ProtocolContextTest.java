@@ -36,9 +36,9 @@ public class ProtocolContextTest {
         gender.setCode(1);
         gender.setName("男");
 
-        API_RESULT.data(gender).code(200).message("success");
+        API_RESULT.code(200).message("success").data(gender);
 
-        RESULT.data(gender).code(200);
+        RESULT.code(200).data(gender);
     }
 
     @Test
@@ -81,11 +81,8 @@ public class ProtocolContextTest {
                 .assertCode(m -> m == 200, r -> new I18nException("error：" + r.getCode()))
                 .map(m -> {
                     Gender gender = m.getData();
-                    ApiResult<String> targetApiResult = ApiResult.of();
-                    targetApiResult.setCode(m.getCode());
-                    targetApiResult.setMessage(m.getMessage());
-                    targetApiResult.setData(gender.getName());
-                    return targetApiResult;
+
+                    return ApiResult.<String>of().code(m.getCode()).message(m.getMessage()).data(gender.getName());
                 })
                 .peek();
         System.out.println(convertResult);
